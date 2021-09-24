@@ -1,0 +1,3 @@
+CREATE USER 'mysql_user'@'%' IDENTIFIED BY '1234ABC';
+GRANT ALL PRIVILEGES ON *.* TO 'mysql_user'@'%';
+FLUSH PRIVILEGES;
