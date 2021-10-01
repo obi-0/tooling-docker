@@ -28,7 +28,7 @@ docker images ls
 ```
 docker run --name <container_name> -e MYSQL_ROOT_PASSWORD=<my-secret-pw> -d mysql/mysql-server:latest
 ```
-Replace ***<container_name>*** with the name of your choice. If you do not provide a name, Docker will generate a random one
+Replace `<container_name>` with the name of your choice. If you do not provide a name, Docker will generate a random one
 
 The ***-d*** option instructs Docker to run the container as a service in the background
 
