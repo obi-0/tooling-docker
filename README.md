@@ -32,7 +32,7 @@ Replace ***<container_name>*** with the name of your choice. If you do not provi
 
 The ***-d*** option instructs Docker to run the container as a service in the background
 
-Replace ***<my-secret-pw>*** with your chosen password
+Replace `<my-secret-pw>` with your chosen password
   
 In the command above, we used the latest version tag. This tag may differ according to the image you downloaded
 
