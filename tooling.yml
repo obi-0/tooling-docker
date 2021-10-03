@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 services:
   app:
     build:
@@ -6,7 +6,7 @@ services:
     container_name: website
     restart: always
     volumes:
-      - "./html/:/var/www/html/"
+      - app:/var/www/html
     ports:
       - "8085:80"
     links:
@@ -18,8 +18,8 @@ services:
     environment:
       MYSQL_DATABASE: toolingdb
       MYSQL_USER: mysql_user
-      MYSQL_PASSWORD: 1234ABC
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      MYSQL_PASSWORD: '1234ABC'
+      MYSQL_ROOT_PASSWORD: '1234abc'
     ports:
       - "3306:3306"
     volumes:
