@@ -1,8 +1,7 @@
 version: "3.7"
 services:
-  web-server:
+  app:
     build:
-      dockerfile: Dockerfile
       context: .
     container_name: website
     restart: always
@@ -10,12 +9,22 @@ services:
       - "./html/:/var/www/html/"
     ports:
       - "8085:80"
-    links: mysql-server
+    links:
+      - mysql-server
   
   mysql-server:
     image: mysql/mysql-server:latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 1234abc
+      MYSQL_DATABASE: toolingdb
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: 1234ABC
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
     ports:
       - "3306:3306"
+    volumes:
+      - mysql-server:/var/lib/mysql
+
+volumes:
+  app:
+  mysql-server:
