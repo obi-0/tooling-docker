@@ -1,4 +1,4 @@
-FROM php:7-apache
+FROM php:7.4.24-apache-buster
 LABEL Dare=dare@zooto.io
 
 RUN apt-get update --fix-missing && apt-get install -y \
