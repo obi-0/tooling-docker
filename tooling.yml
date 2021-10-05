@@ -9,8 +9,6 @@ services:
       - app:/var/www/html
     ports:
       - "8085:80"
-    networks:
-      - tooling_app_network
     links:
       - mysql-server
   
@@ -27,8 +25,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql-server:/var/lib/mysql
-    networks:
-      - tooling_app_network
+    
 
 volumes:
   app:
