@@ -5,7 +5,7 @@ pipeline {
     {
         PROJECT     = 'zooto-tooling-prod'
         ECRURL      = '059636857273.dkr.ecr.eu-central-1.amazonaws.com'
-        DEPLOY_TO = 'development'
+        DEPLOY_TO   = 'development'
     }
 
   stages {
