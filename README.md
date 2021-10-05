@@ -13,6 +13,7 @@ Let us start assembling our application from the Database layer – we will use 
 ```
 docker pull mysql/mysql-server:latest
 ```
+![{95D80C28-457A-4455-9FA5-C41E6A525B17} png](https://user-images.githubusercontent.com/76074379/136104500-e91ed18f-99b5-43f2-937f-5defa5173d26.jpg)
 
 If you are interested in a particular version of MySQL, replace latest with the version number. Visit Docker Hub to check other tags
 
@@ -21,6 +22,9 @@ If you are interested in a particular version of MySQL, replace latest with the 
 ```
 docker images ls
 ```
+
+![{173F4432-4A1E-4903-8B95-32A354A4085F} png](https://user-images.githubusercontent.com/76074379/136104806-cec70401-120d-431a-b7e0-2db09050864a.jpg)
+
 
 **Step 2: Deploy the MySQL Container to your Docker Engine**
 
@@ -36,11 +40,13 @@ Replace `<my-secret-pw>` with your chosen password
   
 In the command above, we used the latest version tag. This tag may differ according to the image you downloaded
 
-- Then, check to see if the MySQL container is running: Assuming the container name specified is mysql-server
+- Then, check to see if the MySQL container is running:
 
   ```
   docker ps -a
   ```
+  
+  ![{DB4B33D7-0399-4412-8441-15BA6C9DE002} png](https://user-images.githubusercontent.com/76074379/136105399-a3d72b73-ff66-4149-b0db-e29e2a80e227.jpg)
   
 You should see the newly created container listed in the output. It includes container details, one being the status of this virtual environment. The status changes from health: starting to healthy, once the setup is complete.
 
@@ -52,8 +58,9 @@ You should see the newly created container listed in the output. It includes con
 
    - Connecting directly to the container running the MySQL server:
 ```
- docker exec -it  mysql -uroot -p 
+ docker exec -it <DB container name or ID> mysql -uroot -p 
 ```
+![{5FE4CA5E-F0C8-4364-8B1C-5158CB764229} png](https://user-images.githubusercontent.com/76074379/136105829-8bc53533-01d6-434e-b637-de1d21857c29.jpg)
 
    - Provide the root password when prompted. With that, you have connected the MySQL client to the server
    - Finally, change the server root password to protect your database
@@ -66,6 +73,8 @@ You should see the newly created container listed in the output. It includes con
 docker network create --subnet=172.18.0.0/24 tooling_app_network 
 ```
 
+![{1FDF2E9B-1639-4880-9207-01514781E6A2} png](https://user-images.githubusercontent.com/76074379/136106030-0816b427-4c33-468d-a487-dcd9445a6daa.jpg)
+
 Creating a custom network is not necessary because even if we do not create a network, Docker will use the default network for all the containers you run. By default, the network we created above is of DRIVER Bridge. So, also, it is the default network. You can verify this by running the docker network ls command.
 
 But there are use cases where this is necessary. For example, if there is a requirement to control the cidr range of the containers running the entire application stack. This will be an ideal situation to create a network and specify the --subnet
@@ -76,6 +85,8 @@ For clarity’s sake, we will create a network with a subnet dedicated for our p
 ```
 export MYSQL_PW=<type password here>
 ```
+![{F9CB36E5-72FD-40C0-8E3F-EF039B9B176F} png](https://user-images.githubusercontent.com/76074379/136106236-7ad20686-f87c-4912-8661-01dc98a9df2b.jpg)
+
 - Then, pull the image and run the container, all in one command like below:
 
 ```
@@ -95,11 +106,14 @@ Create a file and name it `create_user.sql` and add the below code in the file:
 CREATE USER 'mysql_user'@'%' IDENTIFIED BY '1234ABC';
 GRANT ALL PRIVILEGES ON * . * TO 'mysql_user'@'%';
 ```
-- Run the script:
- 
+![{B1943C25-42B8-4F25-9B98-05F135606C4B} png](https://user-images.githubusercontent.com/76074379/136106907-1c860de4-13e1-4743-83d1-f770600ce290.jpg)
+
+- Run the script: 
 ```
-docker exec -i DB-server mysql -uroot -p$MYSQL_PW < ~/create_user.sql
+docker exec -i <container name or ID> mysql -uroot -p$MYSQL_PW < ~/create_user.sql
 ```
+
+
 
 **Step 4: Connecting to the MySQL server from a second container running the MySQL client utility**
 - Run the MySQL Client Container:
