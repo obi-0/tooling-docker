@@ -112,6 +112,29 @@ docker run --network tooling_app_network --name DB-client -it --rm mysql mysql -
 docker rm -f DB-client
 ```
 
+**Step 5: Prepare database schema**
+Now you need to prepare a database schema so that the Tooling application can connect to it.
+
+- Clone the Tooling-app repository from here
+```
+git clone https://github.com/darey-devops/tooling.git 
+```
+
+- On your terminal, export the location of the SQL file
+```
+export tooling_db_schema=~/tooling/html/tooling_db_schema.sql
+```
+
+- You can find the `tooling_db_schema.sql` in the html folder of the cloned repository.
+
+Use the SQL script to create the database and prepare the schema. With the docker exec command, you can execute a command in a running container.
+```
+docker exec -i DB-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema 
+```
+
+- Update the db_conn.php file with connection details to the database
+ $servername = "mysqlserverhost"; $username = "mysql_user"; $password = "1234ABC"; $dbname = "toolingdb";
+
 
 
 
