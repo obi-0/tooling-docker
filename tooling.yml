@@ -2,30 +2,33 @@ version: "3.9"
 services:
   app:
     build:
-      dockerfile: Dockerfile
       context: .
     container_name: website
-    restart: always
+    restart: unless-stopped
     volumes:
       - app:/var/www/html
     ports:
       - "8085:80"
-
+    networks:
+      - tooling_app_network
     links:
       - mysql-server
   
   mysql-server:
     image: mysql/mysql-server:latest
-    restart: always
+    hostname: mysqlserverhost
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: toolingdb
       MYSQL_USER: mysql_user
       MYSQL_PASSWORD: '1234ABC'
-      MYSQL_ROOT_PASSWORD: '1234abc'
+      MYSQL_RANDOM_ROOT_PASSWORD: '1234abc'
     ports:
       - "3306:3306"
     volumes:
       - mysql-server:/var/lib/mysql
+    networks:
+      - tooling_app_netowrk
 
 volumes:
   app:
