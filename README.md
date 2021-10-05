@@ -133,7 +133,13 @@ docker exec -i DB-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema
 ```
 
 - Update the db_conn.php file with connection details to the database
- $servername = "mysqlserverhost"; $username = "mysql_user"; $password = "1234ABC"; $dbname = "toolingdb";
+`
+ $servername = "mysqlserverhost";
+ $username = "mysql_user";
+ $password = "1234ABC";
+ $dbname = "toolingdb";
+ `
+ 
 
 
 
