@@ -140,6 +140,7 @@ docker exec -i DB-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema
  $dbname = "toolingdb";
  `
 
+**Step 6: Packaging, Building and Shipping the Application**
 - In the tooling directory, create a Dockerfile and paste the code below:
 
 ```
