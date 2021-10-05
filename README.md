@@ -41,3 +41,5 @@ In the command above, we used the latest version tag. This tag may differ accord
   ```
   docker ps -a
   ```
+  
+  
