@@ -28,7 +28,7 @@ services:
     volumes:
       - mysql-server:/var/lib/mysql
     networks:
-      - tooling_app_netowrk
+      - tooling_app_network
 
 volumes:
   app:
