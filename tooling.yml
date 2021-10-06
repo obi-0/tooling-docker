@@ -2,13 +2,14 @@ version: "3.9"
 services:
   db:
     image: mysql/mysql-server:latest
-    hostname: mysqlserverhost
+    hostname: "${HOSTNAME}"
     restart: unless-stopped
+    container_name: db-server
     environment:
-      MYSQL_DATABASE: toolingdb
-      MYSQL_USER: mysql_user
-      MYSQL_PASSWORD: '1234ABC'
-      MYSQL_ROOT_PASSWORD: '1234abc'
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     ports:
       - "${DB_PORT}:3306"
     volumes:
@@ -28,8 +29,5 @@ services:
     depends_on:
       - db
   
-    
-
-# volumes:
-#   app:
-#   db:
+volumes:
+   db:
