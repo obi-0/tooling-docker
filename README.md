@@ -121,10 +121,7 @@ docker exec -i <container name or ID> mysql -uroot -p$MYSQL_PW < ~/create_user.s
 ```
 docker run --network tooling_app_network --name DB-client -it --rm mysql mysql -h mysqlserverhost -u mysql_user -p
 ```
-- Since it is confirmed that you can connect to your DB server from a client container, delete the client container:
-```
-docker rm -f DB-client
-```
+- Since it is confirmed that you can connect to your DB server from a client container, exit the mysql utility and press `Control+ C` to terminate the process thus removing the container( the container is not running in a detached mode since we didn't use **-d** flag ).
 
 **Step 5: Prepare database schema**
 Now you need to prepare a database schema so that the Tooling application can connect to it.
