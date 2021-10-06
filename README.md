@@ -161,7 +161,16 @@ docker exec -i DB-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema
  `
 ![{77DB2E0D-A6C7-4FE7-802E-1E8183AA25FD} png](https://user-images.githubusercontent.com/76074379/136197951-b9a20ceb-26fc-4da6-8250-d009bb80e733.jpg)
 
-**Step 6: Packaging, Building and Shipping the Application**
+**Step 6: Packaging, Building and Deploying the Application**
+- A shell script named `start-apache` came with the downloaded repository. It will be referenced in a special file called `Dockerfile` and run with the `CMD` Dockerfile instruction. This will allow us to be able to map other ports to port 80 and publish them using **-p** in our command as we will see later on.
+
+![{21F16215-A722-4C54-88EA-8510D2B08F39} png](https://user-images.githubusercontent.com/76074379/136200210-764336a3-2b26-44c1-b61a-527a72e58d47.jpg)
+
+- Pull image from Docker registry with the code below:
+```
+docker pull php:7.4.24-apache-buster
+```
+
 - In the tooling directory, create a Dockerfile and paste the code below:
 
 ```
@@ -183,11 +192,15 @@ RUN chown -R www-data:www-data /var/www
 
 CMD ["start-apache"]
 ```
+![{4B717590-AF09-4E8E-AA2E-FC3CD63F3B6A} png](https://user-images.githubusercontent.com/76074379/136199137-9e9aacde-5de6-4813-a7c6-ba2a2006dd34.jpg)
 
 - Ensure you are inside the folder that has the Dockerfile and build your container:
 ```
 docker build -t tooling:0.0.1 .
 ```
+
+![{EAC8C9BF-46F8-4BFE-A7E3-2893C1ECE69D} png](https://user-images.githubusercontent.com/76074379/136201150-4102f566-0802-4a23-b781-1c2490d7cfb9.jpg)
+
 
 In the above command, we specify a parameter -t, so that the image can be tagged **tooling:0.0.1** - Also, you have to notice the **.** at the end. This is important as that tells Docker to locate the Dockerfile in the current directory you are running the command. Otherwise, you would need to specify the absolute path to the Dockerfile.
 
@@ -195,14 +208,18 @@ In the above command, we specify a parameter -t, so that the image can be tagged
 ```
 docker run --network tooling_app_network --name website -d -h mysqlserverhost -p 8085:80 -it tooling:0.0.1
 ```
+![{C03504F0-15D7-45F6-9BC8-6B37DBA74D72} png](https://user-images.githubusercontent.com/76074379/136201802-99e59589-b6e9-4605-a051-2623449772c6.jpg)
 
 ***Let us observe those flags in the command. We need to specify the --network flag so that both the Tooling app and the database can easily connect on the same virtual network we created earlier. The -p flag is used to map the container port with the host port. Within the container, apache is the webserver running and, by default, it listens on port 80. You can confirm this with the CMD ["start-apache"] section of the Dockerfile. But we cannot directly use port 80 on our host machine because it is already in use. The workaround is to use another port that is not used by the host machine. In our case, port 8085 is free, so we can map that to port 80 running in the container.***
 
 
 - You can open the browser and type http://localhost:8085. The default email is test@gmail.com, the password is 12345 or you can check users' credentials stored in the toolingdb.user table.
 
+![{21A0E16D-1852-42AE-9924-912BC09DCB92} png](https://user-images.githubusercontent.com/76074379/136201945-99638163-d8c7-4998-b036-9df99efb84eb.jpg)
 
+- Input the login credentials
 
+![{A671B6F5-5764-432E-A6B8-BFE407F51D66} png](https://user-images.githubusercontent.com/76074379/136202044-8a5c6aac-dec1-426d-8b4c-e4f899ae43c4.jpg)
 
 
 
