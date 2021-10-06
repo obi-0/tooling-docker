@@ -4,7 +4,7 @@ services:
     image: mysql/mysql-server:latest
     hostname: "${HOSTNAME}"
     restart: unless-stopped
-    container_name: db-server
+    container_name: tooling-db-server
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_USER: "${MYSQL_USER}"
@@ -18,7 +18,7 @@ services:
   app:
     build:
       context: .
-    container_name: website
+    container_name: tooling-website
     restart: unless-stopped
     volumes:
       - ~/html/.:/var/www/html
