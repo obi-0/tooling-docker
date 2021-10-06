@@ -1,4 +1,4 @@
-## CONTAINERIZATION WITH DOCKER
+## CONTAINERIZATION WITH DOCKER 
 
 ### Docker Installation
 
@@ -220,6 +220,10 @@ docker run --network tooling_app_network --name website -d -h mysqlserverhost -p
 - Input the login credentials
 
 ![{A671B6F5-5764-432E-A6B8-BFE407F51D66} png](https://user-images.githubusercontent.com/76074379/136202044-8a5c6aac-dec1-426d-8b4c-e4f899ae43c4.jpg)
+
+
+
+### USING DOCKER-COMPOSE
 
 
 
