@@ -113,7 +113,7 @@ GRANT ALL PRIVILEGES ON * . * TO 'mysql_user'@'%';
 docker exec -i <container name or ID> mysql -uroot -p$MYSQL_PW < ~/create_user.sql
 ```
 
-
+![{69CFEE72-F0A1-43F5-8996-BB363B4C8C47} png](https://user-images.githubusercontent.com/76074379/136196469-c8972673-0c80-4743-b9fe-7072b4f435ad.jpg)
 
 **Step 4: Connecting to the MySQL server from a second container running the MySQL client utility**
 - Run the MySQL Client Container:
@@ -121,27 +121,36 @@ docker exec -i <container name or ID> mysql -uroot -p$MYSQL_PW < ~/create_user.s
 ```
 docker run --network tooling_app_network --name DB-client -it --rm mysql mysql -h mysqlserverhost -u mysql_user -p
 ```
+![{1AFD3A29-2121-434F-B303-89B11C077449} png](https://user-images.githubusercontent.com/76074379/136196696-44d6d3ee-0e2e-42b1-afab-09e39fa5782b.jpg)
+
 - Since it is confirmed that you can connect to your DB server from a client container, exit the mysql utility and press `Control+ C` to terminate the process thus removing the container( the container is not running in a detached mode since we didn't use **-d** flag ).
 
 **Step 5: Prepare database schema**
 Now you need to prepare a database schema so that the Tooling application can connect to it.
 
-- Clone the Tooling-app repository from here
+- Create a directory and name it tooling, then download the Tooling-app repository from github.
 ```
-git clone https://github.com/darey-devops/tooling.git 
+wget https://github.com/darey-devops/tooling.git 
+```
+
+- Unzip the file and delete the zip file
+```
+unzip <name-of-zip-file> && rm -f <name-of-zip-file>
 ```
 
 - On your terminal, export the location of the SQL file
 ```
 export tooling_db_schema=~/tooling/html/tooling_db_schema.sql
 ```
+![{AD688A26-3831-4122-8177-E6CEB31E34C0} png](https://user-images.githubusercontent.com/76074379/136197683-68d45584-60a4-45d8-8e08-73099a24960a.jpg)
 
-- You can find the `tooling_db_schema.sql` in the html folder of the cloned repository.
+- You can find the `tooling_db_schema.sql` in the html folder of the downloaded repository.
 
 Use the SQL script to create the database and prepare the schema. With the docker exec command, you can execute a command in a running container.
 ```
 docker exec -i DB-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema 
 ```
+![{404F885C-EFE9-412F-9716-402867B35579} png](https://user-images.githubusercontent.com/76074379/136197783-a0e56483-1ec5-44ed-a288-3426e5582ce1.jpg)
 
 - Update the db_conn.php file with connection details to the database
 `
@@ -150,6 +159,7 @@ docker exec -i DB-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema
  $password = "1234ABC";
  $dbname = "toolingdb";
  `
+![{77DB2E0D-A6C7-4FE7-802E-1E8183AA25FD} png](https://user-images.githubusercontent.com/76074379/136197951-b9a20ceb-26fc-4da6-8250-d009bb80e733.jpg)
 
 **Step 6: Packaging, Building and Shipping the Application**
 - In the tooling directory, create a Dockerfile and paste the code below:
