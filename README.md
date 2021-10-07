@@ -227,9 +227,11 @@ docker run --network tooling_app_network --name website -d -h mysqlserverhost -p
 
 All we have done until now required quite a lot of effort to create an image and launch an application inside it. We should not have to always run Docker commands on the terminal to get our applications up and running. There are solutions that make it easy to write declarative code in YAML, and get all the applications and dependencies up and running with minimal effort by launching a single command.
 
-we will refactor the Tooling app POC so that we can leverage the power of Docker Compose.
+We will refactor the Tooling app POC so that we can leverage the power of Docker Compose.
 
 - First, install Docker Compose on your workstation. You can check the version of docker compose with this command: `docker-compose --version`
+![{D056E902-A289-4EC1-8FE7-05EC46BC98D9} png](https://user-images.githubusercontent.com/76074379/136362007-8942412b-bd02-43c9-a084-83a3652be34d.jpg)
+
 - Create a file and name it tooling.yaml
 - Begin to write the Docker Compose definitions with YAML syntax. The code below represent the deployment infrastructure:
 
@@ -268,8 +270,9 @@ services:
 volumes:
    db:
    ```
-   
-   - Create a `.env` file to reference the variables in the tooling.yml file so they can be picked up during execution.(Make sure you have dotenv installed on you workstation). Paste the below variables in the `.env` file:
+![{B5827CDA-C3DC-4CB5-867A-F86A225DC58D} png](https://user-images.githubusercontent.com/76074379/136362525-e250789f-3639-4b92-bfb8-84e4212ade71.jpg)
+
+   - Create a `.env` file to reference the variables in the tooling.yml file so they can be picked up during execution.(Make sure you have dotenv installed on your workstation). Paste the below variables in the `.env` file:
 
 ```
 DB_HOSTNAME=mysqlserverhost
@@ -280,12 +283,17 @@ DB_ROOT_PASSWORD=1234abc
 DB_PORT=3306
 APP_PORT=8085
 ```
+![{4A2BC85D-41D0-4105-83C5-7C926055AA75} png](https://user-images.githubusercontent.com/76074379/136363016-e6d9f1a1-09e5-4e26-bd1f-2d3bfbcf7cfd.jpg)
+
 - You may create a `.gitignore` file and list the `.env` file in there if you do not want it added to github repository
+
+![{A65B5606-3F52-4031-B3CE-671901F88773} png](https://user-images.githubusercontent.com/76074379/136363202-2fcefe77-bfec-4b2f-8808-b2922d475fca.jpg)
 
 - Run the command to start the containers
 ```
 docker-compose -f tooling.yaml  up -d 
 ```
+![{0B77D6FC-5517-446F-8F9F-96456F3CD51F} png](https://user-images.githubusercontent.com/76074379/136363306-ac714d7c-2e25-4d09-9d9a-7dd761f7dc0d.jpg)
 
 - Verify that the compose is in the running status:
 ```
