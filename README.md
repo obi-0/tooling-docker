@@ -223,7 +223,73 @@ docker run --network tooling_app_network --name website -d -h mysqlserverhost -p
 
 
 
-### USING DOCKER-COMPOSE
+### DEPLOYMENT USING DOCKER-COMPOSE
 
+All we have done until now required quite a lot of effort to create an image and launch an application inside it. We should not have to always run Docker commands on the terminal to get our applications up and running. There are solutions that make it easy to write declarative code in YAML, and get all the applications and dependencies up and running with minimal effort by launching a single command.
+
+we will refactor the Tooling app POC so that we can leverage the power of Docker Compose.
+
+- First, install Docker Compose on your workstation. You can check the version of docker compose with this command: `docker-compose --version`
+- Create a file and name it tooling.yaml
+- Begin to write the Docker Compose definitions with YAML syntax. The code below represent the deployment infrastructure:
+
+```
+version: "3.9"
+services:
+  db:
+    image: mysql/mysql-server:latest
+    hostname: "${DB_HOSTNAME}"
+    restart: unless-stopped
+    container_name: tooling-db-server
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - db:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+    container_name: tooling-website
+    restart: unless-stopped
+    volumes:
+      - ~/html/.:/var/www/html
+    ports:
+      - "${APP_PORT}:80"
+    links:
+      - db
+    depends_on:
+      - db
+  
+volumes:
+   db:
+   ```
+   
+   - Create a `.env` file to reference the variables in the tooling.yml file so they can be picked up during execution.(Make sure you have dotenv installed on you workstation). Paste the below variables in the `.env` file:
+
+```
+DB_HOSTNAME=mysqlserverhost
+DB_DATABASE=toolingdb
+DB_USER=mysql_user
+DB_PASSWORD=1234ABC
+DB_ROOT_PASSWORD=1234abc
+DB_PORT=3306
+APP_PORT=8085
+```
+- You may create a `.gitignore` file and list the `.env` file in there if you do not want it added to github repository
+
+- Run the command to start the containers
+```
+docker-compose -f tooling.yaml  up -d 
+```
+
+- Verify that the compose is in the running status:
+```
+docker compose ls
+```
 
 
