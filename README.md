@@ -300,4 +300,8 @@ docker-compose -f tooling.yaml  up -d
 docker compose ls
 ```
 
+- Go to your browser and load http://localhost:8085
 
+```
+![{21A0E16D-1852-42AE-9924-912BC09DCB92} png](https://user-images.githubusercontent.com/76074379/136201945-99638163-d8c7-4998-b036-9df99efb84eb.jpg)
+```
